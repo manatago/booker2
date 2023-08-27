@@ -1,0 +1,6 @@
+<%if book.favorite_users.pluck(:user_id).include?(current_user.id) %>
+<%= link_to favorite_path(:id=>book.id), method: :DELETE, remote: true do %><i class="fa-solid fa-heart"></i><% end %>
+<% else %>
+<%= link_to favorites_path(:id=>book.id), method: :POST, remote: true do %><i class="fa-regular fa-heart"></i><% end %>
+<% end %>
+<%= book.favorites.length %>
