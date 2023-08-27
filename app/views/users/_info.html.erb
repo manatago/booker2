@@ -1,17 +1,36 @@
+<% user = @book && controller.controller_name == 'books' ? @book.user : (@user && controller.controller_name=='users' && controller.action_name=='show' ?  @user : current_user)  %>
+
 <table class='table'>
   <tr><%= image_tag current_user.get_profile_image, size:'100x100' %></tr>
   <tr>
 	  <th>name</th>
-	  <th><%= @book && controller.controller_name == 'books' ? @book.user.name : (@user && controller.controller_name=='users' && controller.action_name=='show' ?  @user.name : current_user.name) %></th>
+	  <th><%= user.name %></th>
   </tr>
   <tr>
 	  <th>introduction</th>
-	  <th><%= @book && controller.controller_name == 'books' ? @book.user.introduction : (@user && controller.controller_name=='users' && controller.action_name=='show' ?  @user.introduction : current_user.introduction) %></th>
+	  <th><%= user.introduction %></th>
+  </tr>
+  <tr>
+    <th>forllows</th>
+    <th>
+      <%= link_to follow_list_path(user) do %>
+      <%= user.follows.length %>
+      <% end %>
+    </th>
+  </tr>
+  <tr>
+    <th>followers</th>
+    <th>
+      
+      <%= link_to follower_list_path(user) do %>
+      <%= user.followers.length %>
+      <% end %>
+    </th>
   </tr>
 </table>
 　
 <div class='row'>
-  <%= link_to edit_user_path(@book && controller.controller_name == 'books' ? @book.user : (@user && controller.controller_name=='users' && controller.action_name=='show' ?  @user : current_user) ), class: "btn btn-outline-secondary btn-block" do %>
+  <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block" do %>
     <i class="fas fa-user-cog"></i>
   <% end %>
 </div>

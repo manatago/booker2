@@ -54,7 +54,14 @@
       </div>
     </div>
   </nav>
-
   
+  <% if current_user %>
+    <%= form_with method: :get, url: search_path do |f| %>
+      <%= f.text_field :word %>
+      <%= f.select :column,['User','Comment'] %>
+      <%= f.select :type,['完全一致','前方一致','後方一致','部分一致'] %>
+      <%= f.submit '検索' %>
+    <% end %>
+  <% end %>
   
 </header>
