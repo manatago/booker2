@@ -10,6 +10,16 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    if request.path.split('/')[3]
+      # user_id = request.path.split('/')[2].to_i
+      if request.path.split('/')[3] == 'follows'
+        @users = User.find(params[:id]).follow_members
+        @title = 'follows'
+      elsif request.path.split('/')[3]=='followers'
+        @users = User.find(params[:id]).follower_members
+        @title = 'followers'
+      end
+    end
     @book = Book.new
   end
 
