@@ -13,12 +13,24 @@
     <%= render 'layouts/header' %>
       <main>
         <p id="notice"><%= notice %></p>
+     
         <% if @book && @book.errors.any? %>
+         
           <div>
             <h2><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h2>
       
             <ul>
             <% @book.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% elsif @book_tmp && @book_tmp.errors.any? %>
+            <div>
+            <h2><%= pluralize(@book_tmp.errors.count, "error") %> prohibited this book from being saved:</h2>
+      
+            <ul>
+            <% @book_tmp.errors.full_messages.each do |message| %>
               <li><%= message %></li>
             <% end %>
             </ul>

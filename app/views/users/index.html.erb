@@ -8,7 +8,9 @@
             <%= render 'books/form', book: @book %>
         </div>
         <div class='col-md-8 offset-md-1'>
+            
             <h2><%= @title ? @title : "Users" %></h2>
+            <%= link_to 'グループを作成', new_group_path %>
             <%= render 'index',users: @users %>
         </div>
     </div>

@@ -7,7 +7,31 @@
     <%= f.label :opinion %>
     <%= f.text_area :body, class: 'form-control book_body' %>
   </div>
+  <div class='form-group'>
+    <div id="post_raty"></div>
+  </div>
+  <div class='form-group'>
+    <%= f.label :tag %>
+    <%= f.text_field :tag  , class: 'form-control book_tag' %>
+  </div>
   <div class="form-group">
     <%= f.submit class: 'btn btn-success' %>
   </div>
 <% end %>
+<script>
+document.addEventListener('turbolinks:load', () => {
+  // scriptファイルをどのidの部分に配置するかを指定
+  var elem = document.querySelector('#post_raty');
+  var opt = {  
+    //星画像の指定などのオプションをここに記述,
+    path: '/assets',
+    scoreName:'book[score]',
+    score: <%= j( book ? book.score : 0) %>,
+    readOnly: <%= j(controller.action_name == 'edit' ? "true" : "false") %>
+   };
+   if(elem !== null){
+     elem.innerHTML='';
+     raty(elem,opt);
+   }
+});
+</script>

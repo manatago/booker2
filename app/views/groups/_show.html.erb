@@ -1,0 +1,45 @@
+<table class='table'>
+    <thead>
+        <tr>
+            <th></th>
+            <th>グループ名</th>
+            <th>紹介文</th>
+            <th>メンバー</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><%= image_tag @group.get_group_image, size: '50x50' %></td>
+            <td><%= link_to @group.name , group_path(@group) %></td>
+            <td><%= @group.introduction %></td>
+            <td>
+                <p><%= @group.owner.name %></p>
+                <% @group.users.each do |user| %>
+                    <p><%= user.name %></p>
+                <% end %>
+            </td>
+            <td>
+                <% if @group.owner_id == current_user.id %>
+                <%= link_to 'edit',edit_group_path(@group), {class: "btn btn-info"} %>
+                <% end %>
+            </td>
+            <td>
+                <% if @group.owner_id != current_user.id %>
+                    <% if current_user.is_joined(@group.id) %>
+                        <%= link_to 'Leave this group',out_group_path(@group), method: :DELETE, class: "btn btn-danger" %>
+                    <% else %>
+                        <%= link_to 'Join this group',join_group_path(@group), method: :POST, class: "btn btn-info" %>
+                    <% end %>
+                <% end %>
+            </td>
+            <td>
+                <% if @group.owner_id == current_user.id %>
+                <%= link_to 'Notice an Event',notice_an_event_path(@group), {class: "btn btn-info"} %>
+                <% end %>
+            </td>
+        </tr>
+    </tbody>
+</table>

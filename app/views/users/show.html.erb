@@ -1,5 +1,4 @@
 <div class='container px-5 px-sm-0'>
-
   <div class='row'>
     <div class='col-md-3'>
       <h2>User info</h2>
@@ -10,6 +9,19 @@
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
+    </div>
+    <div class='col-md-8 offset-md-4'>
+      <%= render 'users/post_sum', user: @user %>
+    </div>
+    <div class='col-md-8 offset-md-4'>
+      <canvas id="myChart" width="400px" height="400px" data-labels='<%= [0,1,2,3,4,5,6].map{|x| (x+1).to_s + '日前' }.reverse.to_json %>' data-data="<%= [0,1,2,3,4,5,6].map{|x| @user.days_post(x).length }.reverse.to_json  %>"></canvas>
+    </div>
+    <div class='col-md-8 offset-md-4'>
+      <%= form_with method: :post , url: post_count_path(@user.id), local: false do |f| %>
+      <%= f.date_field :date %>
+      <%= f.submit '検索' %>
+      <% end %>
+      <p id='books_count'></p>
     </div>
   </div>
 </div>

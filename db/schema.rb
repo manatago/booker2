@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_27_054021) do
+ActiveRecord::Schema.define(version: 2023_08_28_085636) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,6 +40,13 @@ ActiveRecord::Schema.define(version: 2023_08_27_054021) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "book_accesses", force: :cascade do |t|
+    t.integer "book_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_book_accesses_on_book_id"
+  end
+
   create_table "book_comments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "book_id", null: false
@@ -51,11 +58,14 @@ ActiveRecord::Schema.define(version: 2023_08_27_054021) do
   end
 
   create_table "books", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
+    t.string "title", null: false
+    t.text "body", limit: 200, null: false
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "score"
+    t.string "tag"
+    t.index ["user_id"], name: "index_books_on_user_id"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -66,6 +76,34 @@ ActiveRecord::Schema.define(version: 2023_08_27_054021) do
     t.index ["book_id"], name: "index_favorites_on_book_id"
     t.index ["user_id", "book_id"], name: "index_favorites_on_user_id_and_book_id", unique: true
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "group_users", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_group_users_on_group_id"
+    t.index ["user_id"], name: "index_group_users_on_user_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.string "introduction"
+    t.integer "owner_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["owner_id"], name: "index_groups_on_owner_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "speaker_id", null: false
+    t.integer "target_id", null: false
+    t.string "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["speaker_id"], name: "index_messages_on_speaker_id"
+    t.index ["target_id"], name: "index_messages_on_target_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -93,10 +131,17 @@ ActiveRecord::Schema.define(version: 2023_08_27_054021) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "book_accesses", "books"
   add_foreign_key "book_comments", "books"
   add_foreign_key "book_comments", "users"
+  add_foreign_key "books", "users"
   add_foreign_key "favorites", "books"
   add_foreign_key "favorites", "users"
+  add_foreign_key "group_users", "groups"
+  add_foreign_key "group_users", "users"
+  add_foreign_key "groups", "users", column: "owner_id"
+  add_foreign_key "messages", "users", column: "speaker_id"
+  add_foreign_key "messages", "users", column: "target_id"
   add_foreign_key "relationships", "users", column: "followed_id"
   add_foreign_key "relationships", "users", column: "follower_id"
 end
