@@ -11,12 +11,21 @@ class User < ApplicationRecord
   has_many :followers, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :follow_members, through: :follows, source: :followed
   has_many :follower_members, through: :followers, source: :follower
+  
+
+  
+  has_many :group_users
+  has_many :groups, through: :group_users, source: :group
 
   
   has_one_attached :profile_image
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
+  
+  def is_joined(group_id)
+    self.groups.where('group_id = ?',group_id).length > 0
+  end
 
   
   

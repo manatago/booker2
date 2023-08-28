@@ -1,0 +1,15 @@
+<div class='container'>
+
+<h2>
+    Event Mail
+</h2>
+<%= form_with method: :POST,class: 'form-group',url: notice_an_event_path(@group) do |f| %>
+    <%= f.label :title,'タイトル',class: 'form-label' %>
+    <%= f.text_field :title,class: 'form-control' %>
+    <%= f.label :body,'内容',class: 'form-label' %>
+    <%= f.text_area :body,class: 'form-control' %>
+    <%= f.submit '送信',class: 'btn btn-info mt-4' %>
+<% end %>
+
+
+</div>
