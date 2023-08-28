@@ -1,0 +1,7 @@
+$(function(){
+    if("<%= @date %>".length===0){
+        $('#books_count').html('日付を入力してください');
+    }else{
+        $('#books_count').html("<%= @date %>の投稿数<%= j(@user.posted_at(@date).length) %>冊")
+    }
+});

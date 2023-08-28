@@ -7,6 +7,11 @@ class UsersController < ApplicationController
     @books = @user.books
     @book = Book.new
   end
+  
+  def post_count
+   @user = User.find(params[:id])
+   @date = params[:date]
+  end
 
   def index
     @users = User.all

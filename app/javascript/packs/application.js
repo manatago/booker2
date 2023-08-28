@@ -12,7 +12,24 @@ import "popper.js"
 import "bootstrap"
 
 import "../stylesheets/application" 
+import Chart from 'chart.js/auto'
+import draw_chart from './book_count_chart'
+draw_chart();
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+
+// document.addEventListener('turbolinks:load', () => {
+//   var ctx = document.getElementById('myChart').getContext('2d');
+//   var myChart = new Chart(ctx, {
+//   type: 'line',
+//   data: {
+//     labels: JSON.parse(ctx.canvas.dataset.labels),
+//     datasets: [{
+//       data: JSON.parse(ctx.canvas.dataset.data),
+//     }]
+//   },
+//   });
+// })

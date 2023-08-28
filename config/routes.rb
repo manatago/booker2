@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   
   get 'messages/:speaker/:target'=>"messages#index",as: :messages
   post 'messages/:speaker/:target'=>"messages#create"
+  
+  post 'users/:id/post_count'=>"users#post_count",as: :post_count
  
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
