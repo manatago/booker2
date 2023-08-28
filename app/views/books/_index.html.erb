@@ -5,6 +5,8 @@
       <th></th>
       <th>Title</th>
       <th>Opinion</th>
+      <th>Tag</th>
+      <th>Score</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +20,8 @@
         </td>
         <td><%= link_to book.title,book %></td>
         <td><%= book.body %></td>
+        <td><%= book.tag %></td>
+        <td><div class='scores' data-score='<%= book.score ? book.score : 0 %>'><%= book.score ? book.score : 0 %></div></td>
         <td class='favorite-btn' data-book='<%= @book.id %>'>
           <%= render 'favorites/favorite-btn',book: @book %>
         </td>
@@ -31,3 +35,22 @@
     <% end %>
   </tbody>
 </table>
+
+<script>
+document.addEventListener('turbolinks:load', () => {
+  // scriptファイルをどのidの部分に配置するかを指定
+  var elements = document.querySelectorAll('.scores');
+  var opt = {  
+    //星画像の指定などのオプションをここに記述,
+    path: '/assets',
+    scoreName:'book[score]',
+    readOnly: true
+   };
+   if(elements !== null){
+     for(el of elements){
+       el.innerHTML='';
+       raty(el,opt);
+     }
+   }
+});
+</script>

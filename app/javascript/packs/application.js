@@ -21,6 +21,13 @@ Turbolinks.start()
 ActiveStorage.start()
 
 
+import Raty from "raty.js"
+window.raty = function(elem,opt) {
+  let raty =  new Raty(elem,opt)
+  raty.init();
+  return raty;
+}
+
 // document.addEventListener('turbolinks:load', () => {
 //   var ctx = document.getElementById('myChart').getContext('2d');
 //   var myChart = new Chart(ctx, {

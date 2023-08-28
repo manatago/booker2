@@ -1,4 +1,4 @@
-<% user = @book && controller.controller_name == 'books' ? @book.user : (@user && controller.controller_name=='users' && controller.action_name=='show' ?  @user : current_user)  %>
+<% user = @book && @book.user && controller.controller_name == 'books' ? @book.user : (@user && controller.controller_name=='users' && controller.action_name=='show' ?  @user : current_user)  %>
 
 <table class='table'>
   <tr><%= image_tag current_user.get_profile_image, size:'100x100' %></tr>

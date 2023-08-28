@@ -17,6 +17,7 @@
           </td>
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
+          <td><div id="score_stars"></div></td>
             <td>
               <% if @book.user.id==current_user.id %>
               <%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %>
@@ -52,4 +53,18 @@
     </div>
   </div>
 </div>
-<h1>hello</h1>
+<script>
+document.addEventListener('turbolinks:load', () => {
+  // scriptファイルをどのidの部分に配置するかを指定
+  var element = document.querySelector('#score_stars');
+  var option = {  
+    path: '/assets',
+    score: <%= j(@book.score ? @book.score : 0) %>,
+    readOnly: true
+   };
+   if(element){
+     element.innerHTML='';
+     raty(element,option);
+   }
+});
+</script>
