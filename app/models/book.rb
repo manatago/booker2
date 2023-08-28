@@ -3,7 +3,7 @@ class Book < ApplicationRecord
   has_many :favorites
   has_many :favorite_users, through: :favorites, source: :user
   has_many :book_comments
-  
+  has_many :book_accesses
   validates :title,presence: true,length:{minimum: 1}
   validates :body,presence: true,length:{maximum: 200}
 end

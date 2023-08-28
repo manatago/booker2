@@ -1,0 +1,2 @@
+class BookAccess < ApplicationRecord
+end
