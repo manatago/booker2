@@ -24,8 +24,33 @@ class User < ApplicationRecord
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
   end
   
+  
   def is_followed_by(user)
     self.followers.pluck('follower_id').include?(user.id)
+  end
+  
+  def posted_at(day)
+    self.books.where('books.created_at like ? ',"%#{day}%")
+  end
+  
+  def days_post(days_ago)
+    self.books.where('books.created_at <= ?',days_ago.day.ago).where('books.created_at > ?',(days_ago+1).day.ago)
+  end
+  
+  def todays_post
+    self.books.where('books.created_at > ?',1.day.ago)
+  end
+  
+  def predays_post
+    self.books.where('books.created_at <= ?',1.day.ago).where('books.created_at > ?',2.day.ago)
+  end
+  
+  def this_week_post
+    self.books.where('books.created_at > ?',1.week.ago)
+  end
+  
+  def pre_week_post
+    self.books.where('books.created_at <= ?',1.week.ago).where('books.created_at > ?',2.week.ago)
   end
   
 end
