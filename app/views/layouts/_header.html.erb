@@ -56,12 +56,19 @@
   </nav>
   
   <% if current_user %>
+    <nav class='d-flex'>
     <%= form_with method: :get, url: search_path do |f| %>
       <%= f.text_field :word %>
       <%= f.select :column,['User','Comment'] %>
       <%= f.select :type,['完全一致','前方一致','後方一致','部分一致'] %>
       <%= f.submit '検索' %>
     <% end %>
+    
+    <%= form_with method: :get, url: books_path do |f| %>
+      <%= f.text_field :tag %>
+      <%= f.submit 'タグ検索' %>
+    <% end %>
   <% end %>
+  </nav>
   
 </header>
