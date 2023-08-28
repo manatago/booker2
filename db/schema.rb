@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_28_033044) do
+ActiveRecord::Schema.define(version: 2023_08_28_051031) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -75,6 +75,24 @@ ActiveRecord::Schema.define(version: 2023_08_28_033044) do
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
+  create_table "group_users", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_group_users_on_group_id"
+    t.index ["user_id"], name: "index_group_users_on_user_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.string "introduction"
+    t.integer "owner_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["owner_id"], name: "index_groups_on_owner_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.integer "speaker_id", null: false
     t.integer "target_id", null: false
@@ -115,6 +133,9 @@ ActiveRecord::Schema.define(version: 2023_08_28_033044) do
   add_foreign_key "book_comments", "users"
   add_foreign_key "favorites", "books"
   add_foreign_key "favorites", "users"
+  add_foreign_key "group_users", "groups"
+  add_foreign_key "group_users", "users"
+  add_foreign_key "groups", "users", column: "owner_id"
   add_foreign_key "messages", "users", column: "speaker_id"
   add_foreign_key "messages", "users", column: "target_id"
   add_foreign_key "relationships", "users", column: "followed_id"
