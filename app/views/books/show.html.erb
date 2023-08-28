@@ -30,6 +30,9 @@
             <td class='favorite-btn' data-book='<%= @book.id %>'>
               <%= render 'favorites/favorite-btn',book: @book %>
             </td>
+            <td>
+              アクセス: <%= @book.book_accesses.length %>
+            </td>
         </tr>
       </table>
       <ul>

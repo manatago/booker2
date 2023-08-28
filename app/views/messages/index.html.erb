@@ -1,0 +1,10 @@
+<%= form_with model: Message.new do |f| %>
+    <%= f.text_field :message %>
+    <%= f.submit '送信' %>
+<% end %>
+
+<ul>
+<% @messages.each do |message| %>
+    <li><%= message.message %>(<%= message.speaker.name %>)</li>
+<% end %>
+</ul>

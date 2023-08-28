@@ -2,10 +2,14 @@ class BooksController < ApplicationController
   before_action :authenticate_user!
   def show
     @book = Book.find(params[:id])
+    BookAccess.create(:book_id=>@book.id)
   end
 
   def index
-    @books = Book.all
+    @books = Book.left_outer_joins(:favorites)
+              .select('books.*','sum(case when favorites.created_at >= "'+1.week.ago.to_s+'" then 1 else 0 end) as favorites_count')
+              .group('books.id')
+              .order('favorites_count desc')
     @user = current_user
   end
 

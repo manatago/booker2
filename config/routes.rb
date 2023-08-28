@@ -16,6 +16,11 @@ Rails.application.routes.draw do
   
   get 'users/:id/follows' => "users#index", as: :follow_list
   get 'users/:id/followers'=>'users#index', as: :follower_list
+  
+  
+  
+  get 'messages/:speaker/:target'=>"messages#index",as: :messages
+  post 'messages/:speaker/:target'=>"messages#create"
  
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
